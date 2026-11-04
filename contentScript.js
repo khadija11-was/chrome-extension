@@ -17,6 +17,7 @@
     chrome.storage.sync.set({
       [currentVideo]: JSON.stringify([...currentVideoBookmarks, newBookmark].sort((a, b)=> a.time-b.time))
     });
+    showToast("✅ Bookmark added at " + getTime(currentTime));
   };
 
   // Fonction utilitaire pour formater le temps
@@ -24,6 +25,49 @@
     const date = new Date(0);
     date.setSeconds(t);
     return date.toISOString().slice(11, 19);
+  };
+  // fonction pour ajouter un msg de popup lors d'ajout de new bookmark
+  const showToast = (message) => {
+    // Un seul toast à la fois
+    const existing = document.getElementById("yt-bookmark-toast");
+    if (existing) existing.remove();
+
+    // Rattaché au lecteur pour rester visible en plein écran
+    const player = document.querySelector(".html5-video-player");
+    if (!player) return;
+
+    const toast = document.createElement("div");
+    toast.id = "yt-bookmark-toast";
+    toast.textContent = message;
+
+    Object.assign(toast.style, {
+      position: "absolute",
+      top: "16px",
+      left: "16px",
+      padding: "8px 14px",
+      background: "rgba(0, 0, 0, 0.8)",
+      color: "#fff",
+      fontSize: "14px",
+      fontFamily: "Roboto, Arial, sans-serif",
+      borderRadius: "6px",
+      zIndex: "9999",
+      pointerEvents: "none",
+      opacity: "0",
+      transition: "opacity 0.25s ease",
+    });
+
+    player.appendChild(toast);
+
+    // Fondu à l'apparition
+    requestAnimationFrame(() => {
+      toast.style.opacity = "1";
+    });
+
+    // Fondu à la disparition puis suppression
+    setTimeout(() => {
+      toast.style.opacity = "0";
+      setTimeout(() => toast.remove(), 250);
+    }, 2000);
   };
 
   const newVideoLoaded = async () => {
@@ -100,7 +144,9 @@
       chrome.storage.sync.set({[currentVideo]: JSON.stringify(currentVideoBookmarks)});
       //pour avoir les nouveaux bookmarks dans le popup
       response(currentVideoBookmarks);
-    }
+    }else if (type === "ADD_BOOKMARK") {
+      addNewBookmarkEventHandler();
+}
   });
   const fetchBookmarks= ()=>{
     return new Promise((resolve)=>{
@@ -127,3 +173,7 @@
   }
 })();
 // alors maintenant on dois ajouter un listner sur le click du bookmark
+
+//À quel moment il parle de X ?” → l’IA répond et ton bouton ▶
+//resumé du video
+//savoir comment mettre un titre pour le bookmark

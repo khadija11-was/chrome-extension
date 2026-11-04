@@ -33,5 +33,15 @@
     },
     "default_title":"YT bookmarker",
     "default_popup":"popup.html"
+  },
+  "commands": {
+  "add-bookmark": {
+    "suggested_key": {
+      "default": "Alt+S",
+      "mac": "Alt+S"
+    },
+    "description": "Add a bookmark to the actual timestamp"
   }
+}
+
 }

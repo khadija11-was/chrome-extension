@@ -14,3 +14,13 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab)=>{
 
   }
 })
+chrome.commands.onCommand.addListener(async (command) => {
+  if (command !== "add-bookmark") return;
+
+  const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+  if (!tab?.url?.includes("youtube.com/watch")) return;
+
+  chrome.tabs.sendMessage(tab.id, { type: "ADD_BOOKMARK" }).catch(() => {
+    console.warn("Content script pas encore chargé → ignoré");
+  });
+});
