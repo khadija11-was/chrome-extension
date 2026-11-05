@@ -14,8 +14,9 @@
     currentVideoBookmarks= await fetchBookmarks(); //pour que le stockage de nouvelle bookmark sera dans le tableau updaté
     console.log("Bookmark added at:", currentTime);
     console.log(newBookmark);
+    currentVideoBookmarks = [...currentVideoBookmarks, newBookmark].sort((a, b) => a.time - b.time);
     chrome.storage.sync.set({
-      [currentVideo]: JSON.stringify([...currentVideoBookmarks, newBookmark].sort((a, b)=> a.time-b.time))
+      [currentVideo]: JSON.stringify(currentVideoBookmarks)
     });
     showToast("✅ Bookmark added at " + getTime(currentTime));
   };
@@ -131,7 +132,7 @@
 
   // Écouter les messages du background script
   chrome.runtime.onMessage.addListener((obj, sender, response) => {
-    const { type, value, videoId } = obj;
+    const { type, value, videoId, desc } = obj;
     if (type === "NEW") {
       currentVideo = videoId;
       console.log("New YouTube video detected:", videoId);
@@ -146,7 +147,13 @@
       response(currentVideoBookmarks);
     }else if (type === "ADD_BOOKMARK") {
       addNewBookmarkEventHandler();
-}
+    }else if (type === "RENAME") {
+      currentVideoBookmarks = currentVideoBookmarks.map((b) =>
+        b.time == value ? { ...b, desc } : b
+      );
+      chrome.storage.sync.set({[currentVideo]: JSON.stringify(currentVideoBookmarks)});
+      response(currentVideoBookmarks);
+    }
   });
   const fetchBookmarks= ()=>{
     return new Promise((resolve)=>{
@@ -176,4 +183,3 @@
 
 //À quel moment il parle de X ?” → l’IA répond et ton bouton ▶
 //resumé du video
-//savoir comment mettre un titre pour le bookmark

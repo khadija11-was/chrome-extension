@@ -51,3 +51,14 @@
   flex: auto;
   text-align: right;
 }
+
+.bookmark-title-input {
+  width: 100%;
+  box-sizing: border-box;
+  font: inherit;
+  color: inherit;
+  padding: 2px 4px;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  outline: none;
+}

@@ -4,6 +4,8 @@ import {getActiveTabURL} from "./utils.js";
 //cette methode permet de créer l'element complet qui range les bookmarks d'un video
 const addnewBookmark= (bookmarksElement, bookmark)=>{
   const bookTitleElement= document.createElement("div");
+  bookTitleElement.title = "rename";
+  bookTitleElement.addEventListener("click", onrename);
   const newbookmarkElement= document.createElement("div");
   const controlsElement= document.createElement("div");
 
@@ -33,6 +35,52 @@ const onplay=async e =>{
   });
 
 }
+const onrename = (e) => {
+  const titleElement = e.currentTarget;
+  if (titleElement.querySelector("input")) return; // déjà en édition
+
+  const bookmarkTime = titleElement.parentNode.getAttribute("timestamp");
+  const oldTitle = titleElement.textContent;
+
+  const input = document.createElement("input");
+  input.type = "text";
+  input.value = oldTitle;
+  input.maxLength = 100;
+  input.className = "bookmark-title-input";
+
+  titleElement.textContent = "";
+  titleElement.appendChild(input);
+  input.focus();
+  input.select();
+
+  let finished = false;
+  const finish = async (save) => {
+    if (finished) return; // évite le double déclenchement Enter + blur
+    finished = true;
+
+    const newTitle = input.value.trim();
+    if (!save || newTitle === "" || newTitle === oldTitle) {
+      titleElement.textContent = oldTitle;
+      return;
+    }
+
+    titleElement.textContent = newTitle;
+    const activeTab = await getActiveTabURL();
+    chrome.tabs.sendMessage(activeTab.id, {
+      type: "RENAME",
+      value: bookmarkTime,
+      desc: newTitle
+    }, viewBookmarks).catch(() => {
+      console.warn("content script est pas encore injecté");
+    });
+  };
+
+  input.addEventListener("keydown", (ev) => {
+    if (ev.key === "Enter") finish(true);
+    if (ev.key === "Escape") finish(false);
+  });
+  input.addEventListener("blur", () => finish(true));
+};
 
 const ondelete=async e=>{
   const bookmarkTime= e.target.parentNode.parentNode.getAttribute("timestamp");
