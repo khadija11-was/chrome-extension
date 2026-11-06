@@ -62,3 +62,11 @@
   border-radius: 4px;
   outline: none;
 }
+#ai-section { margin-top: 12px; }
+#ai-section button { cursor: pointer; }
+.ask-row { display: flex; gap: 6px; margin: 8px 0; }
+#ask-input { flex: 1; box-sizing: border-box; padding: 4px 6px; }
+#ai-output { font-size: 13px; }
+.ai-text { margin: 6px 0; line-height: 1.4; }
+.moment { display: flex; align-items: center; gap: 8px; margin: 4px 0; }
+.moment-play { flex-shrink: 0; }

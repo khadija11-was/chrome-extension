@@ -1,0 +1,13 @@
+{
+  "action": "summary",
+  "videoId": "9hE5-98ZeCg",
+  "lang": "fr",
+  "transcript": [
+    { "start": 0, "text": "Bonjour et bienvenue dans cette présentation." },
+    { "start": 15, "text": "Aujourd'hui, nous allons découvrir les possibilités de l'intelligence artificielle." },
+    { "start": 35, "text": "L'intelligence artificielle permet aux machines d'effectuer des tâches qui nécessitent normalement une intelligence humaine." },
+    { "start": 60, "text": "Le machine learning est une branche de l'intelligence artificielle qui permet aux systèmes d'apprendre à partir des données." },
+    { "start": 90, "text": "Le deep learning utilise des réseaux de neurones artificiels pour résoudre des problèmes complexes." },
+    { "start": 120, "text": "Ces technologies sont utilisées dans la médecine, les transports et l'éducation." }
+  ]
+}

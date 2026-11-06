@@ -4,7 +4,7 @@
   "version":"1.0",
   "description":"an extension that helps you to save timestamps of YT videos",
   "permissions":["storage", "tabs", "scripting"],
-  "host_permissions":["https://www.youtube.com/*"],
+  "host_permissions":["https://www.youtube.com/*", "http://localhost:8787/*"],
   "background":{
     "service_worker":"background.js"
   },
