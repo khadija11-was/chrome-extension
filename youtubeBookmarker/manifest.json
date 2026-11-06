@@ -3,7 +3,7 @@
   "name": "YT bookmarker",
   "version":"1.0",
   "description":"an extension that helps you to save timestamps of YT videos",
-  "permissions":["storage", "tabs", "scripting"],
+  "permissions":["storage", "tabs", "scripting", "sidePanel"],
   "host_permissions":["https://www.youtube.com/*", "http://localhost:8787/*"],
   "background":{
     "service_worker":"background.js"
@@ -25,14 +25,16 @@
       "matches": ["https://*.youtube.com/*"]
     }
   ],
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  },
   "action": {
     "default_icon": {
       "16": "assets/ext-icon.png",
       "24": "assets/ext-icon.png",
       "32": "assets/ext-icon.png"
     },
-    "default_title":"YT bookmarker",
-    "default_popup":"popup.html"
+    "default_title":"YT bookmarker"
   },
   "commands": {
     "add-bookmark": {

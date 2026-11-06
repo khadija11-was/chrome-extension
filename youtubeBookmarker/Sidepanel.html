@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>YT bookmarker</title>
+  <link rel="stylesheet" href="sidepanel.css" />
+</head>
+<body>
+  <header class="app-header">
+    <h1>YT bookmarker</h1>
+    <p id="video-title" class="video-title"></p>
+  </header>
+
+  <!-- Affiché quand l'onglet actif n'est pas une vidéo YouTube -->
+  <div id="not-youtube" class="empty hidden">
+    <p>Ouvre une vidéo YouTube pour utiliser l'extension.</p>
+  </div>
+
+  <main id="main" class="hidden">
+    <section>
+      <h2>Bookmarks <span id="bookmark-count" class="badge">0</span></h2>
+      <div id="bookmarks"></div>
+    </section>
+
+    <section id="ai-section">
+      <h2>Assistant IA</h2>
+      <button id="summarize-btn" class="primary">✨ Résumer la vidéo</button>
+      <div class="ask-row">
+        <input id="ask-input" type="text" maxlength="300" placeholder="À quel moment parle-t-il de… ?" />
+        <button id="ask-btn" class="secondary">Demander</button>
+      </div>
+      <div id="ai-output"></div>
+    </section>
+  </main>
+
+  <script src="sidepanel.js"></script>
+</body>
+</html>

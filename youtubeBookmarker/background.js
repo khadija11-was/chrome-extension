@@ -24,3 +24,7 @@ chrome.commands.onCommand.addListener(async (command) => {
     console.warn("Content script pas encore chargé → ignoré");
   });
 });
+// Ouvre le panneau latéral au clic sur l'icône de l'extension
+chrome.sidePanel
+  .setPanelBehavior({ openPanelOnActionClick: true })
+  .catch((error) => console.error(error));
